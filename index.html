@@ -18,9 +18,9 @@
             scroll-behavior: smooth;
         }
 
-        body {
+body {
             font-family: 'Inter', sans-serif;
-            background-color: #FAFAFA;
+            background-color: transparent;
             color: #000000;
             overflow-x: hidden;
         }
@@ -188,6 +188,15 @@
         @media (max-width:480px){ .hero-frame .hero-buttons{ flex-direction:column; width:100%; } .hero-frame .hero-buttons .cta-button{ width:100%; text-align:center; } }
         .hero-content { position: relative; z-index: 3; padding: 2rem; max-width: calc(100% - 48px); margin: 0 auto; width: 100%; text-align: center; animation: fadeInUp 1s ease-out; }
 
+        .hero-model model-viewer {
+            width: calc(100% - 40px);
+            max-width: none;
+            height: 60vh;
+            box-shadow: none;
+            border-radius: 0;
+            background: #ffffff;
+        }
+
         /* keep hero carousel images as background elements */
         .hero-carousel-wrapper{ filter: grayscale(20%) brightness(95%); }
 
@@ -312,13 +321,16 @@
 
         .cta-button-secondary {
             background: transparent;
+            padding: auto;
             border: 2px solid #000000;
             color: #000000;
+            transition: all 0.3s ease;
         }
 
         .cta-button-secondary:hover {
             background: #000000;
             color: white;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
         }
 
         @keyframes fadeInUp {
@@ -637,7 +649,7 @@
         model-viewer {
             width: 100%;
             max-width: 600px;
-            height: clamp(300px, 70vw, 600px);
+            height: 60vh;
             margin: 0 auto;
             border-radius: 1.5rem;
             background-color: #FAFAFA;
@@ -865,6 +877,54 @@
             #more-websites { padding:1.75rem 0; }
             .web-body p { font-size:0.95rem; }
         }
+
+        /* Mobile optimization for model controls */
+        @media (max-width: 768px) {
+            #model-controls {
+                top: 20px;
+                right: 10px;
+                flex-direction: column;
+                gap: 5px;
+            }
+            #model-controls button {
+                padding: 6px 12px;
+                font-size: 12px;
+                min-width: auto;
+            }
+        }
+         pre {
+    background-color: #262626;
+    overflow: auto;
+    font-family: 'Monaco', monospace;
+    padding: 2em;
+    border-radius: 25px;
+    max-height: 80vh;
+  }
+
+
+
+code {
+    color: white;
+    font-family: Monaco, monospace;
+    font-size: $base-font-size;
+    line-height: 100%;
+    background-color: #D1D1D0;
+    padding: 0.2em;
+    letter-spacing: -0.05em;
+    word-break: normal;
+    border-radius: 5px;
+  }
+
+
+
+pre code {
+    border: none;
+    background: none;
+    font-size: $base-font-size * 0.875;
+    line-height: 1em;
+    letter-spacing: normal;
+    word-break: break-all;
+  }
     </style>
 </head>
 
@@ -895,36 +955,38 @@
         </div>
     </div>
 
+    <!-- Model Controls -->
+    <div id="model-controls" style="position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; transition: opacity 0.5s ease;">
+        <button id="fullscreen-model" class="cta-button" style="padding: 8px 16px; font-size: 14px;">Full Screen</button>
+        <button id="reset-model" class="cta-button" style="padding: 8px 16px; font-size: 14px;">↻ Reset</button>
+    </div>
+
     <!-- Hero Section -->
     <section id="overview" class="hero-section" data-nav="Overview">
         <div class="hero-content">
-            <div class="hero-model">
-                <div class="hero-panel">
-                    <model-viewer id="wheelchair" src="AI wheel chair REAL-compressed.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate camera-orbit="0deg 75deg 100%" tone-mapping="neutral" poster="poster.webp" shadow-intensity="1">
+<model-viewer id="wheelchair" src="AI wheel chair REAL-compressed.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate camera-orbit="0deg 75deg 100%" tone-mapping="neutral" poster="poster.webp" shadow-intensity="1">
     <div class="progress-bar hide" slot="progress-bar">
         <div class="update-bar"></div>
     </div>
-    <button slot="ar-button" id="ar-button">
-        View in your space
-    </button>
 </model-viewer>
+            <div class="hero-model">
+                <div class="hero-panel">
+                    
                     <div class="hero-frame" aria-hidden="false">
                         <h1 class="hero-brand">Ai Wheel Chair</h1>
                         <div class="hero-buttons">
-                            <a href="#about" class="cta-button">Let&apos;s Begin</a>
+                            <a href="#about" class="cta-button cta-button-secondary">Begin</a>
                             <a href="#materials" class="cta-button cta-button-secondary">Costing</a>
                         </div>
+                        <br>
                     </div>
+                    <div class="section-content" style="text-align:center;">
+            <p style="font-weight:600; margin:0; text-align:center;">A project by<br>Deb Arnob Barai, Ahnaf Tahmid<br>and Arafat Karim Rahat</p>
+        </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="sections-credit" class="project-section" data-nav="Sections">
-        <div class="section-content" style="text-align:center;">
-            <p style="font-weight:600; margin:0;">A project by Deb Arnob Barai, Ahnaf Tahmid and Arafat Karim Rahat</p>
-        </div>
-    </section>
+</section>
 
     <!-- About / Overview -->
     <section id="about" class="project-section reveal-on-scroll" data-nav="About">
@@ -1047,6 +1109,91 @@
         </div><br><br>
     </section>
 
+    <section id="code" class="project-section reveal-on-scroll" data-nav="Source Code">
+        <div class="section-content">
+            <h2>Source Code</h2>
+            <p>Here is the Arduino source code for the AI Wheelchair project:</p><br>
+            <pre><code>#include &lt;SoftwareSerial.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;LiquidCrystal_I2C.h&gt;
+
+// Pins for GSM
+SoftwareSerial gsm(7, 8); 
+
+// Pins for Motors
+const int motorRear = 5;
+const int motorFrontSteer = 9;
+const int emergencyButton = 2;
+
+// Variables
+int bpm = 0;
+bool emergencyActive = false;
+
+// Initialize Display (Address 0x27 is common)
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  pinMode(motorRear, OUTPUT);
+  pinMode(motorFrontSteer, OUTPUT);
+  pinMode(emergencyButton, INPUT_PULLUP);
+  
+  Serial.begin(9600);
+  gsm.begin(9600);
+  lcd.init();
+  lcd.backlight();
+  
+  lcd.setCursor(0, 0);
+  lcd.print("AI Wheelchair");
+  delay(2000);
+}
+
+void loop() {
+  readHeartRate();
+  updateDisplay();
+  
+  // Check for Emergency Button
+  if (digitalRead(emergencyButton) == LOW) {
+    sendEmergencySMS();
+  }
+
+  // Basic movement logic (Example: Move forward)
+  digitalWrite(motorRear, HIGH); 
+  
+  delay(500); // Small delay for stability
+}
+
+void readHeartRate() {
+  int rawValue = analogRead(A0);
+  // Simple mapping for demonstration; actual BPM logic 
+  // requires pulse timing math
+  bpm = map(rawValue, 0, 1023, 40, 160); 
+}
+
+void updateDisplay() {
+  lcd.setCursor(0, 1);
+  lcd.print("BPM: ");
+  lcd.print(bpm);
+  lcd.print("   "); // Clear trailing digits
+}
+
+void sendEmergencySMS() {
+  lcd.clear();
+  lcd.print("Sending SMS...");
+  
+  gsm.println("AT+CMGF=1"); // Set SMS mode
+  delay(1000);
+  gsm.println("AT+CMGS=\"+1234567890\""); // Replace with your number
+  delay(1000);
+  gsm.print("EMERGENCY! The patient needs help. Heart Rate: ");
+  gsm.print(bpm);
+  gsm.write(26); // CTRL+Z to send
+  
+  delay(5000); // Prevent spamming
+  lcd.clear();
+}</code></pre>
+        </div>
+    </section>
+    <br>
 
     <!-- Specs Section -->
     <section id="specs" class="specs-section" data-nav="Specs">
@@ -1146,10 +1293,10 @@
 
                 <div class="spec-card reveal-on-scroll" style="opacity:0.95; filter:saturate(0.8);">
                     <div style="margin-top:0.75rem;">
-                        <div class="spec-label">Coming soon</div><br>
+                        <div class="spec-label">More projects</div><br>
                         <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
                             <div>
-                                <div class="spec-value">More projects</div><br>
+                                <div class="spec-value">Coming soon</div><br>
                                 <div class="spec-unit" style="font-size:0.95rem;">More webs willbe added here soon — check back for updates.</div>
                             </div>
                             <div style="opacity:0.6; font-size:0.9rem;">&mdash;</div>
@@ -1324,6 +1471,51 @@
                 el.addEventListener('click', ()=> { playClick('click').catch(()=>{}); });
             });
 
+            // Full screen and reset for model
+            const modelViewer = document.getElementById('wheelchair');
+            const fullscreenModel = document.getElementById('fullscreen-model');
+            const resetModel = document.getElementById('reset-model');
+            if (resetModel && modelViewer) {
+                resetModel.addEventListener('click', () => {
+                    modelViewer.cameraOrbit = "0deg 75deg 100%";
+                });
+            }
+            if (fullscreenModel && modelViewer) {
+                function updateFullscreenButton() {
+                    if (document.fullscreenElement === modelViewer) {
+                        fullscreenModel.textContent = 'Exit Full Screen';
+                    } else {
+                        fullscreenModel.textContent = 'Full Screen';
+                    }
+                }
+                fullscreenModel.addEventListener('click', () => {
+                    if (document.fullscreenElement === modelViewer) {
+                        document.exitFullscreen();
+                    } else {
+                        modelViewer.requestFullscreen();
+                    }
+                });
+                document.addEventListener('fullscreenchange', updateFullscreenButton);
+                updateFullscreenButton(); // initial
+            }
+
+            // Fade model controls when scrolling away from hero
+            const heroSection = document.getElementById('overview');
+            const modelControls = document.getElementById('model-controls');
+            if (heroSection && modelControls) {
+                const controlsObserver = new IntersectionObserver((entries) => {
+                    const entry = entries[0];
+                    if (entry.isIntersecting) {
+                        modelControls.style.opacity = '1';
+                        modelControls.style.pointerEvents = 'auto';
+                    } else {
+                        modelControls.style.opacity = '0';
+                        modelControls.style.pointerEvents = 'none';
+                    }
+                }, { threshold: 0.1 });
+                controlsObserver.observe(heroSection);
+            }
+
             // Learn button scroll behavior
             const learnButton = document.getElementById('learn-button');
             learnButton && learnButton.addEventListener('click', () => {
@@ -1451,14 +1643,6 @@
         showHeroSlide(0);
     </script>
 
-    <!-- Developer tips (click to expand) -->
-    <details style="margin:1.5rem; color:#333333;"><summary style="cursor:pointer; font-weight:600;">How to add a new section and have it appear in navigation</summary>
-        <pre style="white-space:pre-wrap; margin-top:0.75rem;">&lt;section id="new-section" data-nav="My Label" class="feature-section fade-section"&gt;
-    &lt;div class="feature-grid"&gt;...&lt;/div&gt;
-&lt;/section&gt;
-
-Notes: the script will auto-add links for any section with a <code>data-nav</code> attribute. Use <code>fade-section</code> class to get the fade-in animation that replays when you scroll back.</pre>
-    </details>
 
 <script>
     // Auto-rotate idle reset for the wheelchair model
@@ -1491,6 +1675,19 @@ Notes: the script will auto-add links for any section with a <code>data-nav</cod
         startIdleTimer();
     })();
 </script>
+
+<details style="margin:1.5rem; color:#333333;"><summary style="cursor:pointer; font-weight:600;">more details about the web</summary>
+        Version: 1.1.0<br>
+        Last updated: Jan 2026<br>
+        Created by Deb Arnob Barai<br>
+        Hosted on GitHub Pages<br> 
+        Built with HTML, CSS, JavaScript ( total 1693 lines)<br>
+        3D models in blender, exported to glTF<br>
+        Icons from FontAwesome<br>
+        Fonts from Google Fonts<br>
+        Audio generated with WebAudio API<br>
+        Carousel code adapted from W3Schools<br>
+    </details>
 
 </body>
 </html>
