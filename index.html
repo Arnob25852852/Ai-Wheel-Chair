@@ -892,14 +892,42 @@ body {
                 min-width: auto;
             }
         }
-         pre {
-    background-color: #262626;
-    overflow: auto;
-    font-family: 'Monaco', monospace;
-    padding: 2em;
-    border-radius: 25px;
-    max-height: 80vh;
-  }
+         
+
+  .d-1 {
+  --b:0px;   /* border length*/
+  --c:10px;  /* the cube perspective */
+  
+  --g:calc(var(--c)*0.707); /* 0.707 = cos(45deg) = sin(45deg) */
+  
+  
+  padding:8px;
+  transition: 0.5s;
+  border: solid transparent;
+  border-width:var(--b) var(--b) calc(var(--c) + var(--b)) calc(var(--c) + var(--b));
+  background:
+    linear-gradient(-45deg,transparent var(--g),rgba(177, 176, 176, 0.6) 0) left  /var(--c) 100%,
+    linear-gradient(135deg,transparent var(--g),rgba(95, 94, 94, 0.3) 0) bottom /100% var(--c),
+    conic-gradient(from -90deg at top var(--b)   right var(--b),currentColor 270deg,transparent 0),
+    conic-gradient(from  90deg at bottom calc(var(--c) + var(--b)) left calc(var(--c) + var(--b)),currentColor 270deg,transparent 0) ;
+  background-repeat:no-repeat;
+  background-origin:border-box;
+  transform:translate(calc(var(--c)/-1),calc(var(--c)/1));
+  clip-path: 
+    polygon(var(--c) 0%, var(--c) 0%, 
+    100% 0%, 
+    100% calc(100% - var(--c)),100% calc(100% - var(--c)),
+    var(--c) calc(100% - var(--c)),
+    var(--c) calc(100% - var(--c)));
+}
+.d-1:hover {
+  transform:translate(0,0);
+  clip-path: 
+    polygon(0% var(--c), var(--c) 0%, 
+    100% 0%, 
+    100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 
+    0% 100%,0% 100%);
+}
 
 
 
@@ -920,10 +948,19 @@ code {
 pre code {
     border: none;
     background: none;
-    font-size: $base-font-size * 0.875;
+    font-size: $base-font-size * 0.25;
     line-height: 1em;
     letter-spacing: normal;
     word-break: break-all;
+    word-wrap: break-word;
+  }
+  pre {
+    background-color: #000000;
+    overflow: auto;
+    font-family: 'Monaco', monospace;
+    padding: 2em;
+    border-radius: 25px;
+    max-height: 80vh;
   }
     </style>
 </head>
@@ -981,7 +1018,8 @@ pre code {
                         <br>
                     </div>
                     <div class="section-content" style="text-align:center;">
-            <p style="font-weight:600; margin:0; text-align:center;">A project by<br>Deb Arnob Barai, Ahnaf Tahmid<br>and Arafat Karim Rahat</p>
+            <p style="font-weight:600; margin:0; text-align:center;">A project by<br>Deb Arnob Barai, Ahnaf Tahmid<br>and Arafat Karim Rahat</p><br>
+            <p>#Will be featured on 23 January 2026 <br>at Notre Dame College, Dhaka</p>
         </div>
                 </div>
             </div>
@@ -1090,12 +1128,12 @@ pre code {
         <div class="section-content">
             <h2>Benefits</h2>
             <ul>
-                <li><b>Enhanced Mobility</b></li>
-                <li><b>Real-time Health Monitoring</b></li>
-                <li><b>Obstacle Avoidance</b></li>
-                <li><b>Emergency Assistance</b></li>
-                <li><b>Assistance with Daily Tasks</b></li>
-                <li><b>Reduced Physical Strain</b></li>
+                <li><div class="d-1"><b>Enhanced Mobility</b></div></li>
+                <li><div class="d-1"><b>Real-time Health Monitoring</b></div></li>
+                <li><div class="d-1"><b>Obstacle Avoidance</b></div></li>
+                <li><div class="d-1"><b>Emergency Assistance</b></div></li>
+                <li><div class="d-1"><b>Assistance with Daily Tasks</b></div></li>
+                <li><div class="d-1"><b>Reduced Physical Strain</b></div></li>
             </ul>
         </div>
     </section>
@@ -1182,7 +1220,7 @@ void sendEmergencySMS() {
   
   gsm.println("AT+CMGF=1"); // Set SMS mode
   delay(1000);
-  gsm.println("AT+CMGS=\"+1234567890\""); // Replace with your number
+  gsm.println("AT+CMGS=\"+880 1******878\""); // number
   delay(1000);
   gsm.print("EMERGENCY! The patient needs help. Heart Rate: ");
   gsm.print(bpm);
@@ -1226,7 +1264,7 @@ void sendEmergencySMS() {
     </section>
 
     <!-- Gallery Carousel -->
-    <section class="carousel-section reveal-on-scroll" data-nav="Gallery">
+    <section class="project-section reveal-on-scroll" data-nav="Gallery">
         <h2 class="carousel-title">Gallery & Showcase</h2>
         <div class="carousel-container">
             <button class="carousel-arrow carousel-prev" aria-label="Previous slide">‹</button>
@@ -1681,7 +1719,7 @@ void sendEmergencySMS() {
         Last updated: Jan 2026<br>
         Created by Deb Arnob Barai<br>
         Hosted on GitHub Pages<br> 
-        Built with HTML, CSS, JavaScript ( total 1693 lines)<br>
+        Built with HTML, CSS, JavaScript<br>
         3D models in blender, exported to glTF<br>
         Icons from FontAwesome<br>
         Fonts from Google Fonts<br>
